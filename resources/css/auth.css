@@ -1,0 +1,63 @@
+/* ===================================
+   GENERAL
+=================================== */
+
+body {
+    background-color: #f8f9fa;
+}
+
+/* ===================================
+   HERO SECTION
+=================================== */
+
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero h1 {
+    font-weight: 700;
+}
+
+.hero p {
+    color: #6c757d;
+}
+
+/* ===================================
+   SERVICE CARDS
+=================================== */
+
+.service-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+footer {
+    margin-top: 60px;
+}
+
+/* ===================================
+   MODALS
+=================================== */
+
+.modal-content {
+    border-radius: 15px;
+}
+
+.modal-header {
+    border-bottom: 0;
+}
+
+.modal-footer {
+    border-top: 0;
+}

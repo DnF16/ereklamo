@@ -1,0 +1,293 @@
+@import 'tailwindcss';
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+
+/* ==========================
+   e-REKLAMO Dashboard Theme
+========================== */
+
+body{
+    background:#0B1120;
+    color:#fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.main-content{
+    background:#0B1120;
+    min-height:100vh;
+    padding:30px;
+}
+
+/* ========================================
+   Global Card Style
+======================================== */
+
+.app-card{
+    background:#131C2E;
+    border:1px solid #24324A;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+    color:white;
+}
+
+.app-card .card-header{
+    background:transparent;
+    border-bottom:1px solid #24324A;
+    color:white;
+}
+
+.app-card .text-muted{
+    color:#9CA3AF !important;
+}
+
+
+/* .dashboard-card{
+    background:#131C2E;
+    border:1px solid #24324A;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+    color:white;
+}
+
+.dashboard-card .card-header{
+    background:transparent;
+    border-bottom:1px solid #24324A;
+    color:white;
+}
+
+.dashboard-card .text-muted{
+    color:#9CA3AF !important;
+} */
+
+.dashboard-content{
+    margin-left:260px;
+    min-height:100vh;
+    
+}
+
+.table-dark{
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: transparent;
+    --bs-table-hover-bg: #162235;
+    --bs-table-border-color: #24324A;
+}
+
+.table thead th{
+    color:#9CA3AF;
+    font-weight:600;
+    border-bottom:1px solid #24324A;
+}
+
+.table tbody td{
+    color:white;
+}
+
+/* side bar css */
+.sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:260px;
+    min-height:100vh;
+    background:#0B1120;
+    border-right:1px solid #24324A;
+    padding:25px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:28px;
+    font-weight:700;
+    color:white;
+}
+
+.logo i{
+    color:#4F7DFF;
+    font-size:30px;
+}
+
+.user-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:15px;
+    border-radius:14px;
+    background:#131C2E;
+}
+
+.avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#4F7DFF;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.user-info h6{
+    color:white;
+    margin:0;
+}
+
+.user-info small{
+    color:#94A3B8;
+}
+
+.sidebar .nav-link{
+    color:#94A3B8;
+    padding:13px 16px;
+    border-radius:12px;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:.3s;
+}
+
+.sidebar .nav-link i{
+    font-size:18px;
+}
+
+.sidebar .nav-link:hover{
+    background:#162235;
+    color:white;
+}
+
+.sidebar .nav-link.active{
+    background:#2354FF;
+    color:white;
+}
+
+/* analytics card css */
+.analytics-card .card-body{
+    height:450px;
+}
+
+/* USER MANAGEMENT PAGE CSS */
+/* .user-card{
+    background:#131C2E;
+    border:1px solid #24324A;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+    color:white;
+}
+
+.user-card .card-header{
+    background:transparent;
+    border-bottom:1px solid #24324A;
+    color:white;
+}
+
+.user-card .text-muted{
+    color:#9CA3AF !important;
+} */
+
+.user-content{
+    margin-left:260px;
+    min-height:100vh;
+    
+}
+
+.user-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    gap:15px;
+}
+
+.user-search{
+    width:320px;
+}
+
+.user-filter{
+    width:180px;
+}
+
+
+/* Form-control CSS (chuy cha filter ya search bar) */
+.form-control,
+.form-select{
+    background-color: #1B263B !important;
+    border: 1px solid #24324A !important;
+    color: #fff !important;
+}
+
+
+.form-control::placeholder{
+    color: #94A3B8 !important;
+}
+
+
+.form-select{
+    color: #fff !important;
+}
+
+
+.form-control:focus,
+.form-select:focus{
+    background-color: #1B263B !important;
+    border-color: #4F7DFF !important;
+    color: #fff !important;
+    box-shadow: 0 0 0 .15rem rgba(79,125,255,.25);
+}
+
+
+.form-select option{
+    background:#1B263B;
+    color:#fff;
+}
+
+/* Login css */
+.navbar{
+    background:#131C2E;
+    border-color:#24324A !important;
+}
+
+.navbar-brand{
+    color:white !important;
+    font-weight:700;
+}
+
+body{
+    background:
+        radial-gradient(circle at top,#172554 0%,#0B1120 65%);
+    color:white;
+}
+
+.modal-content{
+    background:#131C2E;
+    border:1px solid #24324A;
+    color:white;
+}
+
+.modal-header{
+    border-bottom:1px solid #24324A;
+}
+
+.modal-footer{
+    border-top:1px solid #24324A;
+}
+
+.modal-header .btn-close{
+    background-color:#a8b5ca;
+}
+

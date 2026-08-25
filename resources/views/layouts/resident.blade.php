@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>e-REKLAMO Resident</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    @stack('styles')
+
+</head>
+
+<body>
+
+<div>
+
+    @include('partials.sidebar.resident')
+
+    <div class="dashboard-content">
+
+        
+
+        <main class="container-fluid p-4">
+
+            @yield('content')
+
+        </main>
+
+    </div>
+
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+@stack('scripts')
+
+</body>
+
+</html>
