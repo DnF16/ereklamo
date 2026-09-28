@@ -177,21 +177,32 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const complaints = {!! json_encode($complaints->map(function($c) { return ['lat' => $c->latitude, 'lng' => $c->longitude, 'id' => $c->id, 'category' => $c->category, 'priority' => $c->priority]; })) !!};
 
 complaints.forEach(complaint => {
-    let color = '#0d6efd';
-    if (complaint.priority === 'urgent') {
-        color = '#dc3545';
-    } else if (complaint.priority === 'high') {
-        color = '#ffc107';
+    let color;
+
+    if (complaint.priority === 'high') {
+        color = '#dc3545'; // Red
+    } else if (complaint.priority === 'medium') {
+        color = '#fd7e14'; // Orange
+    } else if (complaint.priority === 'low') {
+        color = '#198754'; // Green
+    } else {
+        color = '#6c757d'; // Gray if priority is unknown
     }
-    
+
     L.circleMarker([complaint.lat, complaint.lng], {
-        radius: 6,
+        radius: 7,
         fillColor: color,
         color: '#fff',
         weight: 2,
         opacity: 1,
-        fillOpacity: 0.8
-    }).bindPopup(`<strong>Complaint #${complaint.id}</strong><br>Category: ${complaint.category}<br>Priority: ${complaint.priority}`).addTo(map);
+        fillOpacity: 0.9
+    }).bindPopup(`
+        <strong>Complaint #${complaint.id}</strong><br>
+        Category: ${complaint.category}<br>
+        Priority: <strong style="color: ${color};">
+            ${complaint.priority ? complaint.priority.toUpperCase() : 'UNKNOWN'}
+        </strong>
+    `).addTo(map);
 });
 
 setTimeout(() => {

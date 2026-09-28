@@ -22,29 +22,57 @@ class ComplaintController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'category' => 'required|in:maintenance,noise,safety,cleanliness,other',
             'description' => 'required|string|max:1000',
-            'category' => 'required|string|in:maintenance,noise,safety,cleanliness,other',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
+            'evidence' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:20480',
         ]);
 
-        // Set default priority - staff will set actual priority
-        $validated['priority'] = 'medium';
+        // Send the complaint description to the Python AI API
+        try {
+            $response = \Illuminate\Support\Facades\Http::timeout(5)
+                ->post('http://127.0.0.1:8001/predict', [
+                    'description' => $validated['description'],
+                ]);
 
+            if ($response->successful()) {
+                $validated['priority'] = $response->json('priority');
+            } else {
+                $validated['priority'] = 'medium';
+            }
+        } catch (\Exception $e) {
+            // Use medium if the AI server is unavailable
+            $validated['priority'] = 'medium';
+        }
+
+        // Set the initial complaint status.
+        $validated['status'] = 'pending';
+
+        // Save the complaint for the authenticated resident.
         $complaint = auth()->user()->complaints()->create($validated);
 
-        return redirect()->route('resident.complaints')
+        return redirect()
+            ->route('resident.complaints')
             ->with('success', 'Complaint submitted successfully!');
     }
 
     /**
      * Display a listing of the resident's complaints.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $complaints = auth()->user()->complaints()
-            ->latest()
-            ->paginate(10);
+        $query = auth()->user()->complaints()->latest();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+
+        $complaints = $query->paginate(10)->appends($request->query());
 
         return view('resident.complaints', compact('complaints'));
     }

@@ -50,50 +50,42 @@
     </div>
 
     <!-- Filters -->
-    <div class="card app-card mb-4">
+    <form method="GET" action="{{ route('admin.complaints') }}" class="card app-card mb-4">
         <div class="card-body">
 
-            <div class="row g-3">
-
-                <!-- <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Search Complaint...">
-                </div> -->
-
-                <div class="col-md-2">
-                    <select class="form-select">
-                        <option>Status</option>
-                        <option>Pending</option>
-                        <option>Assigned</option>
-                        <option>In Progress</option>
-                        <option>Resolved</option>
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small text-muted mb-1">Status</label>
+                    <select class="form-select" name="status">
+                        <option value="">All Statuses</option>
+                        <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="in_progress" {{ request('status') === 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                        <option value="resolved" {{ request('status') === 'resolved' ? 'selected' : '' }}>Resolved</option>
+                        <option value="closed" {{ request('status') === 'closed' ? 'selected' : '' }}>Closed</option>
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <select class="form-select">
-                        <option>Category</option>
+                <div class="col-md-3">
+                    <label class="form-label small text-muted mb-1">Priority</label>
+                    <select class="form-select" name="priority">
+                        <option value="">All Priorities</option>
+                        <option value="urgent" {{ request('priority') === 'urgent' ? 'selected' : '' }}>Urgent</option>
+                        <option value="high" {{ request('priority') === 'high' ? 'selected' : '' }}>High</option>
+                        <option value="medium" {{ request('priority') === 'medium' ? 'selected' : '' }}>Medium</option>
+                        <option value="low" {{ request('priority') === 'low' ? 'selected' : '' }}>Low</option>
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <select class="form-select">
-                        <option>Priority</option>
-                        <option>High</option>
-                        <option>Medium</option>
-                        <option>Low</option>
-                    </select>
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    @if (request('status') || request('priority'))
+                        <a href="{{ route('admin.complaints') }}" class="btn btn-outline-secondary">Reset</a>
+                    @endif
                 </div>
-
-                <!-- <div class="col-md-2">
-                    <button class="btn btn-primary w-100">
-                        Search
-                    </button>
-                </div> -->
-
             </div>
 
         </div>
-    </div>
+    </form>
 
     <!-- Complaint Table -->
     <div class="card app-card">
@@ -136,7 +128,7 @@
                                     @if ($complaint->priority === 'urgent')
                                         <span class="badge bg-danger">{{ ucfirst($complaint->priority) }}</span>
                                     @elseif ($complaint->priority === 'high')
-                                        <span class="badge bg-warning text-dark">{{ ucfirst($complaint->priority) }}</span>
+                                        <span class="badge bg-danger">{{ ucfirst($complaint->priority) }}</span>
                                     @elseif ($complaint->priority === 'medium')
                                         <span class="badge bg-warning text-dark">{{ ucfirst($complaint->priority) }}</span>
                                     @else
@@ -238,7 +230,30 @@
 
                                     <div class="mb-4">
                                         <h6 class="text-muted small fw-semibold">Location</h6>
-                                        <p class="mb-0 text-muted small">Latitude: {{ $complaint->latitude }}, Longitude: {{ $complaint->longitude }}</p>
+                                        <!-- <p class="mb-0 text-muted small">Latitude: {{ $complaint->latitude }}, Longitude: {{ $complaint->longitude }}</p> -->
+                                         <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <p class="mb-1 text-muted small">
+                                                    Latitude: {{ $complaint->latitude }}
+                                                </p>
+                                                <p class="mb-0 text-muted small">
+                                                    Longitude: {{ $complaint->longitude }}
+                                                </p>
+                                            </div>
+
+                                            @if ($complaint->latitude && $complaint->longitude)
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-sm btn-outline-primary"
+                                                    data-location-modal="#complaintLocationModal-{{ $complaint->id }}"
+                                                >
+                                                    <i class="bi bi-geo-alt me-1"></i>
+                                                    View Location
+                                                </button>
+                                            @else
+                                                <span class="text-muted small">No location provided</span>
+                                            @endif
+                                        </div>
                                     </div>
 
                                     <div class="mb-4">
@@ -318,6 +333,74 @@
             </div>
         </div>
     </div>
+
+        <!-- Location Modal -->
+        @if ($complaint->latitude && $complaint->longitude)
+
+        <div
+            class="modal fade"
+            id="complaintLocationModal-{{ $complaint->id }}"
+            tabindex="-1"
+            aria-labelledby="complaintLocationModalLabel-{{ $complaint->id }}"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg">
+
+                    <div class="modal-header">
+                        <div>
+                            <h5
+                                class="modal-title fw-bold"
+                                id="complaintLocationModalLabel-{{ $complaint->id }}"
+                            >
+                                Complaint #{{ $complaint->id }} Location
+                            </h5>
+
+                            <small class="text-muted">
+                                Pinned complaint location
+                            </small>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+
+                    <div class="modal-body p-0">
+
+                        <div
+                            id="complaint-map-{{ $complaint->id }}"
+                            style="height: 500px; width: 100%;"
+                        ></div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <span class="text-muted small me-auto">
+                            <i class="bi bi-geo-alt me-1"></i>
+                            {{ $complaint->latitude }},
+                            {{ $complaint->longitude }}
+                        </span>
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Close
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    @endif
 @endforeach
 
 <style>
@@ -333,4 +416,113 @@
     }
 </style>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('[data-location-modal]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            const locationModal = document.querySelector(button.dataset.locationModal);
+            const modalInstance = bootstrap.Modal.getOrCreateInstance(locationModal);
+
+            locationModal.style.zIndex = '1060';
+            locationModal.addEventListener('shown.bs.modal', function () {
+                const backdrops = document.querySelectorAll('.modal-backdrop');
+                const backdrop = backdrops[backdrops.length - 1];
+
+                if (backdrop) {
+                    backdrop.style.zIndex = '1055';
+                }
+            }, { once: true });
+
+            modalInstance.show();
+        });
+    });
+
+    @foreach ($complaints as $complaint)
+
+        @if ($complaint->latitude && $complaint->longitude)
+
+            const locationModal{{ $complaint->id }} =
+                document.getElementById(
+                    'complaintLocationModal-{{ $complaint->id }}'
+                );
+
+            let complaintMap{{ $complaint->id }} = null;
+
+            locationModal{{ $complaint->id }}.addEventListener(
+                'shown.bs.modal',
+                function () {
+
+                    const latitude = {{ $complaint->latitude }};
+                    const longitude = {{ $complaint->longitude }};
+
+                    if (!complaintMap{{ $complaint->id }}) {
+
+                        complaintMap{{ $complaint->id }} = L.map(
+                            'complaint-map-{{ $complaint->id }}'
+                        ).setView(
+                            [latitude, longitude],
+                            18
+                        );
+
+                        L.tileLayer(
+                            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            {
+                                attribution: '&copy; OpenStreetMap contributors'
+                            }
+                        ).addTo(
+                            complaintMap{{ $complaint->id }}
+                        );
+
+                        let priorityColor{{ $complaint->id }};
+
+                        @if ($complaint->priority === 'high')
+                            priorityColor{{ $complaint->id }} = '#dc3545'; // Red
+                        @elseif ($complaint->priority === 'medium')
+                            priorityColor{{ $complaint->id }} = '#fd7e14'; // Orange
+                        @elseif ($complaint->priority === 'low')
+                            priorityColor{{ $complaint->id }} = '#198754'; // Green
+                        @else
+                            priorityColor{{ $complaint->id }} = '#6c757d'; // Gray
+                        @endif
+
+                        L.circleMarker(
+                            [latitude, longitude],
+                            {
+                                radius: 10,
+                                fillColor: priorityColor{{ $complaint->id }},
+                                color: '#fff',
+                                weight: 3,
+                                opacity: 1,
+                                fillOpacity: 0.9
+                            }
+                        )
+                        .addTo(
+                            complaintMap{{ $complaint->id }}
+                        )
+                        .bindPopup(
+                            '<strong>Complaint #{{ $complaint->id }}</strong><br>' +
+                            '{{ ucfirst($complaint->priority) }} Priority'
+                        )
+                        .openPopup();
+
+                    } else {
+
+                        complaintMap{{ $complaint->id }}.invalidateSize();
+
+                        complaintMap{{ $complaint->id }}.setView(
+                            [latitude, longitude],
+                            18
+                        );
+                    }
+
+                }
+            );
+
+        @endif
+
+    @endforeach
+
+});
+</script>
 @endsection

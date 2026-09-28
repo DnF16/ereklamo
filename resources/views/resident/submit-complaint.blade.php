@@ -26,7 +26,7 @@
                         <i class="bi bi-funnel"></i>
                     </span>
                     <select class="form-select border-start-0" id="statusFilter" name="status">
-                        <option value="">All Complaints</option>
+                        <option value="all">All Complaints</option>
                         <option value="pending">Pending</option>
                         <option value="in_progress">In Progress</option>
                         <option value="resolved">Resolved</option>
@@ -58,13 +58,13 @@
                             <th>Priority</th>
                             <th>Status</th>
                             <th>Date Submitted</th>
-                            <th class="text-center">Action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody id="complaintTableBody">
                         @forelse ($complaints as $complaint)
-                            <tr>
+                            <tr data-status="{{ $complaint->status }}">
                                 <td>{{ $complaint->id }}</td>
                                 <td>
                                     <span class="badge bg-info">{{ ucfirst($complaint->category) }}</span>
@@ -76,7 +76,7 @@
                                     @if ($complaint->priority === 'urgent')
                                         <span class="badge bg-danger">{{ ucfirst($complaint->priority) }}</span>
                                     @elseif ($complaint->priority === 'high')
-                                        <span class="badge bg-warning text-dark">{{ ucfirst($complaint->priority) }}</span>
+                                        <span class="badge bg-danger">{{ ucfirst($complaint->priority) }}</span>
                                     @elseif ($complaint->priority === 'medium')
                                         <span class="badge bg-warning text-dark">{{ ucfirst($complaint->priority) }}</span>
                                     @else
@@ -250,10 +250,6 @@
 
                 <div class="modal-body p-4">
                     <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold small text-secondary text-white">Complaint Title</label>
-                            <input type="text" class="form-control" name="title" placeholder="Brief summarizing headline" required>
-                        </div>
 
                         <div class="col-md-6">
                             <label class="form-label fw-semibold small text-secondary text-white">Category</label>
@@ -315,6 +311,31 @@
 
 @push('scripts')
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const statusFilter = document.getElementById('statusFilter');
+        const rows = Array.from(document.querySelectorAll('#complaintTableBody tr[data-status]'));
+        const emptyRow = document.querySelector('#complaintTableBody tr td[colspan]');
+
+        function applyStatusFilter() {
+            const selectedStatus = statusFilter.value;
+            let visibleRows = 0;
+
+            rows.forEach((row) => {
+                const rowStatus = (row.dataset.status || '').trim();
+                const matches = selectedStatus === 'all' || rowStatus === selectedStatus;
+                row.style.display = matches ? '' : 'none';
+                if (matches) visibleRows++;
+            });
+
+            if (emptyRow) {
+                emptyRow.closest('tr').style.display = visibleRows === 0 ? '' : 'none';
+            }
+        }
+
+        if (statusFilter) {
+            statusFilter.addEventListener('change', applyStatusFilter);
+        }
+    });
 
 let map;
 let marker;

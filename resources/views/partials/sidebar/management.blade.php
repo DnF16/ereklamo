@@ -2,7 +2,8 @@
 
     <!-- Logo -->
     <div class="logo mb-4">
-        <i class="bi bi-shield-check"></i>
+        <!-- <i class="bi bi-shield-check"></i> -->
+         <img src="{{ asset('images/logo') }}">
         <span>e-REKLAMO</span>
     </div>
 
@@ -47,12 +48,12 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a href="{{ route('admin.reports') }}" class="nav-link {{ request()->routeIs('admin.reports') ? 'active' : '' }}">
                 <i class="bi bi-file-earmark-bar-graph-fill"></i>
                 Reports
             </a>
-        </li>
+        </li> -->
 
         <li class="nav-item">
             <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}">

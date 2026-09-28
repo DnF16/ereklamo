@@ -13,6 +13,41 @@
         </a>
     </div>
 
+    <form method="GET" action="{{ route('resident.complaints') }}" class="card app-card mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small text-muted mb-1">Status</label>
+                    <select class="form-select" name="status">
+                        <option value="">All Statuses</option>
+                        <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="in_progress" {{ request('status') === 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                        <option value="resolved" {{ request('status') === 'resolved' ? 'selected' : '' }}>Resolved</option>
+                        <option value="closed" {{ request('status') === 'closed' ? 'selected' : '' }}>Closed</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label small text-muted mb-1">Priority</label>
+                    <select class="form-select" name="priority">
+                        <option value="">All Priorities</option>
+                        <option value="urgent" {{ request('priority') === 'urgent' ? 'selected' : '' }}>Urgent</option>
+                        <option value="high" {{ request('priority') === 'high' ? 'selected' : '' }}>High</option>
+                        <option value="medium" {{ request('priority') === 'medium' ? 'selected' : '' }}>Medium</option>
+                        <option value="low" {{ request('priority') === 'low' ? 'selected' : '' }}>Low</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    @if (request('status') || request('priority'))
+                        <a href="{{ route('resident.complaints') }}" class="btn btn-outline-secondary">Reset</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </form>
+
     @if ($complaints->count() > 0)
         <!-- Complaints Table -->
         <div class="card app-card">
@@ -49,7 +84,7 @@
                                         @if ($complaint->priority === 'urgent')
                                             <span class="badge bg-danger">{{ ucfirst($complaint->priority) }}</span>
                                         @elseif ($complaint->priority === 'high')
-                                            <span class="badge bg-warning text-dark">{{ ucfirst($complaint->priority) }}</span>
+                                            <span class="badge bg-danger">{{ ucfirst($complaint->priority) }}</span>
                                         @elseif ($complaint->priority === 'medium')
                                             <span class="badge bg-warning text-dark">{{ ucfirst($complaint->priority) }}</span>
                                         @else

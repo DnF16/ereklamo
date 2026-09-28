@@ -11,11 +11,19 @@ class ComplaintController extends Controller
     /**
      * Display a listing of all complaints for admin dashboard.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $complaints = Complaint::with('user')
-            ->latest()
-            ->paginate(15);
+        $query = Complaint::with('user')->latest();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+
+        $complaints = $query->paginate(15)->appends($request->query());
 
         // Get statistics
         $stats = [

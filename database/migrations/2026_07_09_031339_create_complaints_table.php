@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
             $table->string('description');
-            $table->string('category');
-            $table->string('priority');
+            $table->string('category')->nullable();
+            $table->string('priority')->nullable();
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->string('status')->default('pending');

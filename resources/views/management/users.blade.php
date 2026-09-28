@@ -65,35 +65,34 @@
 
         <div class="card-body">
 
-            <div class="row g-3">
+            <div class="row g-3 align-items-end">
 
-                <div class="col-md-5">
+                <div class="col-md-4">
+                    <label for="userSearch" class="form-label small text-secondary mb-1">Search</label>
                     <input
+                        id="userSearch"
                         type="text"
                         class="form-control"
-                        placeholder="Search by name or email...">
+                        placeholder="Search by name or email">
                 </div>
 
                 <div class="col-md-3">
-                    <select class="form-select">
-                        <option>All Roles</option>
-                        <option>Resident</option>
-                        <option>Staff</option>
+                    <label for="roleFilter" class="form-label small text-secondary mb-1">Role</label>
+                    <select id="roleFilter" class="form-select">
+                        <option value="all">All Roles</option>
+                        <option value="resident">Resident</option>
+                        <option value="staff">Staff</option>
+                        <option value="admin">Admin</option>
                     </select>
                 </div>
 
                 <div class="col-md-2">
-                    <select class="form-select">
-                        <option>All Status</option>
-                        <option>Active</option>
-                        <option>Inactive</option>
+                    <label for="statusFilter" class="form-label small text-secondary mb-1">Status</label>
+                    <select id="statusFilter" class="form-select">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
                     </select>
-                </div>
-
-                <div class="col-md-2">
-                    <button class="btn btn-primary w-100">
-                        Search
-                    </button>
                 </div>
 
             </div>
@@ -125,9 +124,9 @@
                     </tr>
                 </thead>
 
-                    <tbody>
+                    <tbody id="userTableBody">
                         @forelse($users as $user)
-                        <tr>
+                        <tr data-role="{{ strtolower($user->role) }}" data-status="{{ $user->deleted_at ? 'inactive' : 'active' }}" data-search="{{ strtolower($user->name . ' ' . $user->email) }}">
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
@@ -306,5 +305,47 @@
 </div>
 
 </div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('userSearch');
+        const roleFilter = document.getElementById('roleFilter');
+        const statusFilter = document.getElementById('statusFilter');
+        const rows = Array.from(document.querySelectorAll('#userTableBody tr[data-role]'));
+        const emptyRow = document.querySelector('#userTableBody tr td[colspan]');
+
+        function applyFilters() {
+            const searchTerm = (searchInput.value || '').trim().toLowerCase();
+            const roleValue = roleFilter.value;
+            const statusValue = statusFilter.value;
+
+            let visibleRows = 0;
+
+            rows.forEach((row) => {
+                const rowText = (row.dataset.search || '').toLowerCase();
+                const rowRole = row.dataset.role || '';
+                const rowStatus = row.dataset.status || '';
+
+                const matchesSearch = !searchTerm || rowText.includes(searchTerm);
+                const matchesRole = roleValue === 'all' || rowRole === roleValue;
+                const matchesStatus = statusValue === 'all' || rowStatus === statusValue;
+                const isVisible = matchesSearch && matchesRole && matchesStatus;
+
+                row.style.display = isVisible ? '' : 'none';
+                if (isVisible) visibleRows++;
+            });
+
+            if (emptyRow) {
+                emptyRow.closest('tr').style.display = visibleRows === 0 ? '' : 'none';
+            }
+        }
+
+        searchInput.addEventListener('input', applyFilters);
+        roleFilter.addEventListener('change', applyFilters);
+        statusFilter.addEventListener('change', applyFilters);
+    });
+</script>
+@endpush
 
 @endsection

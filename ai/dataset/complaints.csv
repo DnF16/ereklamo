@@ -1,0 +1,248 @@
+description,priority
+"The street lamp near our house is not working",low
+"One of the street lights has been broken for a week",low
+"The lamp post on our street needs to be repaired",low
+"The street light turns off every night",low
+"The road sign in our area is damaged",low
+"The waiting shed needs minor repairs",low
+"The barangay bench is broken",low
+"The public bulletin board is damaged",low
+"The sidewalk has a small crack",low
+"There is a small hole on the sidewalk",low
+"The road surface needs maintenance",low
+"The drainage cover is damaged",medium
+"The drainage near our house is overflowing",medium
+"Water is starting to collect because the drainage is blocked",medium
+"The drainage smells bad and needs to be cleaned",medium
+"Rainwater cannot pass through the clogged drainage",medium
+"The road has several potholes",medium
+"There are deep potholes along our street",medium
+"The potholes are making it difficult for vehicles to pass",medium
+"Part of the road is damaged",medium
+"The road becomes difficult to pass when it rains",medium
+"The water pipe has been leaking for several days",medium
+"There is water leaking from a pipe beside the road",medium
+"The leaking pipe is causing water to collect on the street",medium
+"The public restroom needs repair",medium
+"The barangay facility has damaged equipment",medium
+"The community facility needs maintenance",medium
+"The garbage truck has not visited our area",medium
+"Garbage collection has been delayed for several days",medium
+"Trash is piling up near the roadside",medium
+"The garbage bins have been full for several days",medium
+"People are leaving garbage beside the road",medium
+"Garbage is starting to block part of the sidewalk",medium
+"There is a bad smell coming from accumulated garbage",medium
+"Garbage is blocking the drainage and water is starting to overflow",high
+"The drainage is completely blocked and flooding the road",high
+"Flood water is entering several houses in our area",high
+"The road is flooded and vehicles cannot pass",high
+"A large section of the road has collapsed",high
+"There is a large hole in the road that could cause an accident",high
+"A damaged electrical post is leaning toward the road",high
+"There are exposed electrical wires along the street",high
+"A power line has fallen onto the road",high
+"There are sparks coming from a damaged electrical wire",high
+"A water pipe burst and water is flooding the street",high
+"The road is dangerously flooded right now",high
+"The sidewalk has collapsed and people could fall",high
+"A large portion of the sidewalk has broken off",high
+"There is a deep open hole beside the sidewalk",high
+"Someone is being threatened near our street right now",high
+"A person is threatening residents in the neighborhood",high
+"There is a person threatening people with a weapon",high
+"Someone is carrying a weapon and threatening people",high
+"There is a fight happening outside our house right now",high
+"People are fighting in the street right now",high
+"Someone has been injured during a fight",high
+"A person was seriously injured in an incident",high
+"Someone needs immediate help after being injured",high
+"There is a dangerous situation happening near the barangay hall",high
+"A suspicious person is threatening residents right now",high
+"Someone is trying to break into a house",high
+"There is an ongoing disturbance involving several people",high
+"There is a possible fire in a nearby house",high
+"Smoke is coming from a house nearby",high
+"There is a fire spreading near our homes",high
+"A gas leak is suspected near our street",high
+"I smell gas coming from a nearby house",high
+"There is a strong gas smell in the neighborhood",high
+"Someone appears to be in immediate danger",high
+"A child is in danger near the road",high
+"A person has collapsed and needs immediate assistance",high
+"There was an accident on our street",high
+"A vehicle crashed near the barangay hall",high
+"Someone was hit by a vehicle",high
+"There is an injured person on the road",high
+"The area is dangerous because of a fallen electrical line",high
+"Flood water is entering our house",high
+"Water is rapidly rising in our neighborhood",high
+"The street is completely blocked by flood water",high
+"A stray dog has been roaming around the playground",low
+"There are stray cats around the community center",low
+"A neighbor keeps several animals in an unsafe enclosure",medium
+"Stray dogs are becoming a problem near the market",medium
+"A dog keeps entering our property",low
+"Several stray dogs are chasing motorcycles",high
+"A stray dog bit someone in our neighborhood",high
+"An aggressive dog is attacking people",high
+"There are rats around the public area",medium
+"Rodents are entering houses in our area",medium
+"There is a growing rat infestation near the market",high
+"Many mosquitoes are present around the neighborhood",medium
+"There are many mosquitoes near the stagnant water",medium
+"The community needs mosquito control",low
+"There are insects spreading around the public area",medium
+"A dead animal is lying beside the road",medium
+"There is a dead animal near the playground",medium
+"A dead animal is creating a strong odor",medium
+"Someone dumped animal waste near our house",low
+"Animal waste is scattered around the public walkway",medium
+"The public comfort room has no water",medium
+"The public restroom has a broken door",low
+"The public restroom is unusable",medium
+"The public restroom has a strong sewage smell",medium
+"The barangay hall has a broken window",low
+"The barangay hall roof has a leak",medium
+"Water is leaking through the ceiling of the community center",medium
+"The roof of the waiting shed is damaged",medium
+"The waiting shed is unsafe to use",high
+"The playground equipment is damaged",medium
+"A broken swing is hanging from the playground",high
+"The playground has damaged equipment that children could fall from",high
+"The basketball court fence is damaged",low
+"The basketball court has a dangerous section of flooring",high
+"The public court lights are not working",low
+"The community center has damaged chairs",low
+"The barangay hall has no functioning public toilet",medium
+"The public water dispenser is broken",low
+"There is no water available at the public facility",medium
+"Our area has had no water supply since this morning",medium
+"We have had no water for several days",high
+"The water supply suddenly stopped in our neighborhood",high
+"The water coming from the public tap looks dirty",high
+"Brown water is coming from the community water supply",high
+"The water has an unusual smell",medium
+"The water pressure is very weak in our area",low
+"A water valve is leaking badly",medium
+"A broken water meter is causing water to leak",medium
+"Water is flowing continuously from a damaged pipe",high
+"A large tree branch is hanging over the road",high
+"A tree is leaning dangerously toward several houses",high
+"A tree has fallen across the road",high
+"A fallen tree is blocking the only road out of our area",high
+"Branches are blocking the sidewalk",medium
+"Tree roots are damaging the sidewalk",medium
+"A tree is damaging a nearby wall",medium
+"There are loose branches that may fall during strong winds",high
+"Leaves are blocking the entrance to the public facility",low
+"The roadside vegetation is becoming overgrown",low
+"Grass is covering part of the walkway",low
+"Overgrown plants are blocking visibility near the corner",medium
+"The road is blocked by a parked vehicle",medium
+"A vehicle is blocking the entrance to our street",medium
+"Several vehicles are blocking the sidewalk",medium
+"A delivery truck is blocking the narrow road",medium
+"Construction materials are blocking the walkway",medium
+"Building materials have been left on the roadside",medium
+"A pile of rocks is blocking part of the road",medium
+"Someone placed objects in the middle of the street",medium
+"The sidewalk is being used as a parking area",low
+"Vehicles are regularly parked in front of the community gate",low
+"A large object fell onto the road",high
+"A fallen pole is blocking traffic",high
+"A metal structure has fallen near the road",high
+"There is a loose manhole cover on the road",high
+"The manhole cover is missing",high
+"There is an open manhole near the sidewalk",high
+"People could fall into the open manhole",high
+"A concrete cover has broken and left an opening",high
+"The road barrier has been damaged",medium
+"A safety barrier is missing beside the road",high
+"There is no guardrail beside the steep section of the road",high
+"A road sign has fallen and is blocking traffic",medium
+"The pedestrian crossing sign is damaged",low
+"The traffic mirror at the corner is broken",medium
+"Vehicles cannot see pedestrians clearly at the intersection",high
+"The intersection has poor visibility",medium
+"Drivers are speeding through our street",medium
+"Motorcycles are speeding near the school",high
+"Vehicles are frequently ignoring the pedestrian crossing",medium
+"Drivers are using the residential street as a shortcut",low
+"There is dangerous traffic near the school entrance",high
+"Children are having difficulty crossing the road safely",high
+"The road becomes very congested during school dismissal",medium
+"Vehicles are blocking the school entrance",high
+"Public transportation is frequently blocking the road",medium
+"A vehicle has been abandoned on the roadside",low
+"An abandoned vehicle has been left on the street for weeks",medium
+"There is an unattended vehicle blocking emergency access",high
+"The community gate is damaged",medium
+"The gate of the public facility cannot be locked",high
+"The fence around the public property has a large opening",medium
+"Someone damaged the fence around the playground",medium
+"A section of the public fence has collapsed",high
+"There is a hole in the fence that children can pass through",high
+"The public facility door cannot be closed",medium
+"The door lock at the public building is broken",medium
+"The electrical outlet in the public building is damaged",high
+"There are exposed wires inside the public facility",high
+"The electrical panel at the community center is damaged",high
+"There is a burning smell coming from an electrical outlet",high
+"The public building keeps losing electricity",medium
+"The community center has no electricity",medium
+"A loud alarm has been sounding for hours",medium
+"There is a continuous loud sound coming from a public facility",medium
+"A generator is producing excessive noise",medium
+"The noise from a nearby establishment is disturbing residents",medium
+"A business is operating with excessive noise late at night",medium
+"People are using the public court late at night and disturbing nearby homes",medium
+"Residents are burning leaves near the houses",medium
+"Someone is burning waste beside the road",high
+"Smoke from burning waste is entering our house",high
+"There is thick smoke coming from a nearby property",high
+"A neighbor is burning materials close to other houses",high
+"There is a strong chemical smell in the neighborhood",high
+"An unknown liquid was spilled near the roadside",high
+"Someone dumped an unknown substance near the public area",high
+"There is an oil spill on the road",high
+"The road is slippery because of spilled oil",high
+"There is broken glass scattered on the sidewalk",high
+"Broken bottles are scattered near the playground",high
+"Sharp objects were left on the walkway",medium
+"Construction debris is scattered around the public area",medium
+"Nails and other sharp materials are scattered on the road",high
+"There is a damaged electrical transformer near the houses",high
+"A utility pole appears unstable",high
+"A utility pole is leaning toward a house",high
+"A cable is hanging dangerously low across the road",high
+"There are wires hanging over the pedestrian walkway",high
+"A fallen cable is blocking the entrance",high
+"The community notice board needs to be updated",low
+"The public information board is damaged",low
+"The barangay waiting area needs maintenance",low
+"The public seating area needs repair",low
+"The community garden needs maintenance",low
+"The basketball court needs repainting",low
+"The public facility needs painting",low
+"The community center needs minor maintenance",low
+"The barangay pathway needs improvement",low
+"The entrance to the public building needs repair",low
+"The public trash container is damaged",medium
+"The recycling collection area needs maintenance",low
+"The community garden has become neglected",low
+"The public pathway is difficult to use because of overgrown plants",medium
+"There is poor lighting around the public facility",medium
+"The pathway near the community center is too dark at night",medium
+"The pedestrian area is difficult to navigate at night",medium
+"There is a safety concern around the poorly lit pathway",high
+"The emergency exit of the public building is blocked",high
+"The emergency access road is obstructed",high
+"Emergency vehicles may have difficulty entering our street",high
+"The fire exit is blocked by stored materials",high
+"Someone has blocked the emergency entrance",high
+"There is no clear emergency access to our area",high
+"The evacuation route is blocked",high
+"The evacuation area cannot be accessed",high
+"People are blocking the designated emergency area",medium
+"The community evacuation center needs maintenance",low
