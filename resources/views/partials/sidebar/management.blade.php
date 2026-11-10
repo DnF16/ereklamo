@@ -48,12 +48,12 @@
             </a>
         </li>
 
-        <!-- <li class="nav-item">
-            <a href="{{ route('admin.reports') }}" class="nav-link {{ request()->routeIs('admin.reports') ? 'active' : '' }}">
+        <li class="nav-item">
+            <a href="{{ route('admin.archived') }}" class="nav-link {{ request()->routeIs('admin.archived') ? 'active' : '' }}">
                 <i class="bi bi-file-earmark-bar-graph-fill"></i>
-                Reports
+                Archive Complaints
             </a>
-        </li> -->
+        </li>
 
         <li class="nav-item">
             <a href="{{ route('admin.profile') }}" class="nav-link {{ request()->routeIs('admin.profile') ? 'active' : '' }}">

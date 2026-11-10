@@ -160,7 +160,7 @@
                                                 @if ($complaint->priority === 'urgent')
                                                     <span class="badge bg-danger">{{ ucfirst($complaint->priority) }}</span>
                                                 @elseif ($complaint->priority === 'high')
-                                                    <span class="badge bg-warning text-dark">{{ ucfirst($complaint->priority) }}</span>
+                                                    <span class="badge bg-danger">{{ ucfirst($complaint->priority) }}</span>
                                                 @elseif ($complaint->priority === 'medium')
                                                     <span class="badge bg-warning text-dark">{{ ucfirst($complaint->priority) }}</span>
                                                 @else
@@ -173,6 +173,32 @@
                                     <div class="mb-4">
                                         <h6 class="text-muted small fw-semibold">Location</h6>
                                         <p class="mb-0 text-muted small">Latitude: {{ $complaint->latitude }}, Longitude: {{ $complaint->longitude }}</p>
+                                    </div>
+
+                                    <!-- Evidence Image -->
+                                    <div class="mb-4">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">Evidence Image</h6>
+                                        </div>
+
+                                        <div class="card-body">
+                                            @if ($complaint->image)
+                                                <img
+                                                    src="{{ asset('storage/' . $complaint->image) }}"
+                                                    alt="Resident's complaint evidence"
+                                                    class="img-fluid rounded evidence-thumbnail"
+                                                    style="max-width: 50%; max-height: 130px; object-fit: contain; cursor: zoom-in;"
+                                                    title="Click to enlarge"
+                                                >
+                                                <small class="d-block text-muted mt-1">
+                                                    Click image to enlarge
+                                                </small>
+                                            @else
+                                                <p class="text-muted mb-0">
+                                                    No evidence image was uploaded for this complaint.
+                                                </p>
+                                            @endif
+                                        </div>
                                     </div>
 
                                     <div class="mb-4">
@@ -253,7 +279,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label fw-semibold small text-secondary text-white">Category</label>
-                            <select class="form-select" name="category" required>
+                            <select class="form-select" name="category" id="complaintCategory" required>
                                 <option selected disabled value="">Select Category...</option>
                                 <option value="maintenance">Maintenance</option>
                                 <option value="noise">Noise</option>
@@ -261,6 +287,21 @@
                                 <option value="cleanliness">Cleanliness</option>
                                 <option value="other">Other</option>
                             </select>
+                        </div>
+
+                        <!-- Other Category Textbox -->
+                        <div class="col-md-6 d-none" id="otherCategoryContainer">
+                            <label class="form-label fw-semibold small text-secondary text-white">
+                                Specify Other Category
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="other_category"
+                                id="otherCategory"
+                                placeholder="Enter complaint category..."
+                            >
                         </div>
 
                         <div class="col-12">
@@ -286,13 +327,17 @@
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label fw-semibold small text-secondary text-white">Upload Evidence (Photos/Videos)</label>
+                            <label class="form-label fw-semibold small text-secondary text-white">Upload image (Photos/Videos)</label>
                             <div class="card border-dashed p-3 text-center bg-light">
-                                <input type="file" class="form-control d-none" id="evidenceFile" name="evidence">
-                                <label for="evidenceFile" style="cursor: pointer;" class="mb-0 text-muted">
+                                <input type="file" class="form-control d-none" id="imageFile" name="image" accept=".jpg,.jpeg,.png,.mp4,.mov,.avi">
+                                <label for="imageFile" style="cursor: pointer;" class="mb-0 text-muted">
                                     <i class="bi bi-cloud-arrow-up display-6 text-primary mb-2 d-block"></i>
                                     <span class="fw-medium text-primary">Click to select files</span> or drag and drop here
                                 </label>
+                                <div id="imagePreview" class="d-none mt-3">
+                                    <img id="imageImage" class="img-fluid rounded d-none mx-auto mb-2" alt="Selected image preview" style="max-height: 220px;">
+                                    <div id="imageFileName" class="small text-muted"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -308,6 +353,95 @@
 </div>
 
 
+<!-- Evidence Image Enlargement Modal -->
+<div
+    class="evidence-lightbox"
+    id="evidenceImageModal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Evidence image"
+    aria-hidden="true"
+>
+    <button
+        type="button"
+        class="evidence-lightbox-close"
+        aria-label="Close enlarged evidence image"
+    >&times;</button>
+
+    <img id="fullEvidenceImage" alt="Enlarged complaint evidence">
+</div>
+
+<style>
+    .evidence-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    background: rgba(0, 0, 0, 0.90);
+    cursor: zoom-out;
+    backdrop-filter: blur(4px);
+    }
+
+    .evidence-lightbox.is-open {
+        display: flex;
+    }
+
+    .evidence-lightbox img {
+        display: block;
+        max-width: 95vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        cursor: default;
+    }
+
+    .evidence-lightbox-close {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        z-index: 1;
+        border: 0;
+        background: transparent;
+        color: white;
+        font-size: 2.5rem;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .evidence-thumbnail {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .evidence-thumbnail:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 576px) {
+        .evidence-lightbox {
+            padding: 1rem;
+        }
+
+        .evidence-lightbox img {
+            max-width: 96vw;
+            max-height: 85vh;
+        }
+
+        .evidence-lightbox-close {
+            top: 0.5rem;
+            right: 0.75rem;
+        }
+    }
+</style>
+
+
+
 
 @push('scripts')
 <script>
@@ -315,6 +449,60 @@
         const statusFilter = document.getElementById('statusFilter');
         const rows = Array.from(document.querySelectorAll('#complaintTableBody tr[data-status]'));
         const emptyRow = document.querySelector('#complaintTableBody tr td[colspan]');
+        const imageInput = document.getElementById('imageFile');
+        const imagePreview = document.getElementById('imagePreview');
+        const imageImage = document.getElementById('imageImage');
+        const imageFileName = document.getElementById('imageFileName');
+        let imageImageUrl;
+
+        // OTHER CATEGORY FUNCTIONALITY
+        const categorySelect = document.getElementById('complaintCategory');
+        const otherContainer = document.getElementById('otherCategoryContainer');
+        const otherInput = document.getElementById('otherCategory');
+
+        if (categorySelect && otherContainer && otherInput) {
+            categorySelect.addEventListener('change', function () {
+
+                if (this.value === 'other') {
+                    otherContainer.classList.remove('d-none');
+                    otherInput.required = true;
+                } else {
+                    otherContainer.classList.add('d-none');
+                    otherInput.required = false;
+                    otherInput.value = '';
+                }
+
+            });
+        }
+
+        imageInput.addEventListener('change', function () {
+            const file = imageInput.files[0];
+
+            if (imageImageUrl) {
+                URL.revokeObjectURL(imageImageUrl);
+                imageImageUrl = undefined;
+            }
+
+            if (!file) {
+                imagePreview.classList.add('d-none');
+                imageImage.classList.add('d-none');
+                imageImage.removeAttribute('src');
+                imageFileName.textContent = '';
+                return;
+            }
+
+            imageFileName.textContent = file.name;
+            imagePreview.classList.remove('d-none');
+
+            if (file.type.startsWith('image/')) {
+                imageImageUrl = URL.createObjectURL(file);
+                imageImage.src = imageImageUrl;
+                imageImage.classList.remove('d-none');
+            } else {
+                imageImage.classList.add('d-none');
+                imageImage.removeAttribute('src');
+            }
+        });
 
         function applyStatusFilter() {
             const selectedStatus = statusFilter.value;
@@ -335,6 +523,64 @@
         if (statusFilter) {
             statusFilter.addEventListener('change', applyStatusFilter);
         }
+
+        // EVIDENCE IMAGE ENLARGEMENT
+    const evidenceModal = document.getElementById('evidenceImageModal');
+    const fullEvidenceImage = document.getElementById('fullEvidenceImage');
+    const closeEvidenceImage = evidenceModal
+        ? evidenceModal.querySelector('.evidence-lightbox-close')
+        : null;
+
+    let evidenceImageTrigger = null;
+
+    if (evidenceModal && fullEvidenceImage && closeEvidenceImage) {
+
+        document.addEventListener('click', function (event) {
+            const image = event.target.closest('.evidence-thumbnail');
+
+            if (!image) return;
+
+            evidenceImageTrigger = image;
+            fullEvidenceImage.src = image.src;
+
+            evidenceModal.classList.add('is-open');
+            evidenceModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            closeEvidenceImage.focus();
+        });
+
+        function hideEvidenceImage() {
+            evidenceModal.classList.remove('is-open');
+            evidenceModal.setAttribute('aria-hidden', 'true');
+
+            fullEvidenceImage.src = '';
+            document.body.style.overflow = '';
+
+            if (evidenceImageTrigger) {
+                evidenceImageTrigger.focus();
+                evidenceImageTrigger = null;
+            }
+        }
+
+        closeEvidenceImage.addEventListener('click', hideEvidenceImage);
+
+        evidenceModal.addEventListener('click', function (event) {
+            if (event.target === evidenceModal) {
+                hideEvidenceImage();
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (
+                event.key === 'Escape' &&
+                evidenceModal.classList.contains('is-open')
+            ) {
+                hideEvidenceImage();
+            }
+        });
+    }
+
     });
 
 let map;

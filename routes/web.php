@@ -41,7 +41,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/complaints/filter/status/{status}', [AdminComplaintController::class, 'filterByStatus'])->name('complaints-filter-status');
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::get('/reports', fn () => view('management.reports'))->name('reports');
+    Route::get('/archived', [AdminComplaintController::class, 'archived'])
+    ->name('archived');
     Route::get('/profile', fn () => view('management.profile'))->name('profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -22,6 +22,11 @@ return new class extends Migration
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->string('status')->default('pending');
+            $table->string('image')->nullable();
+            $table->foreignId('status_updated_by')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
 
             $table->timestamps();
         });

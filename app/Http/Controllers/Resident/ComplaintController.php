@@ -26,7 +26,7 @@ class ComplaintController extends Controller
             'description' => 'required|string|max:1000',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
-            'evidence' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:20480',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:20480',
         ]);
 
         // Send the complaint description to the Python AI API
@@ -49,11 +49,18 @@ class ComplaintController extends Controller
         // Set the initial complaint status.
         $validated['status'] = 'pending';
 
+        // Store the uploaded file.
+        $image = $request->file('image');
+
+        if ($image) {
+            $validated['image'] = $image->store('complaint-images', 'public');
+        }
+
         // Save the complaint for the authenticated resident.
         $complaint = auth()->user()->complaints()->create($validated);
 
         return redirect()
-            ->route('resident.complaints')
+            ->route('resident.submit-complaint')
             ->with('success', 'Complaint submitted successfully!');
     }
 

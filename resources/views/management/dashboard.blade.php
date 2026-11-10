@@ -115,6 +115,21 @@
                 </div>
 
                 <div class="card-body">
+                    <h6 class="d-flex align-items-center gap-3 flex-wrap">
+                        LEGEND:
+
+                        <span>
+                            <i class="bi bi-circle-fill text-danger"></i> High
+                        </span>
+
+                        <span>
+                            <i class="bi bi-circle-fill text-warning"></i> Medium
+                        </span>
+
+                        <span>
+                            <i class="bi bi-circle-fill" style="color: #198754;"></i> Low
+                        </span>
+                    </h6>
 
                     <div id="complaintMap"
                         style="height:290px; border-radius:10px;">
@@ -174,7 +189,22 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Add complaint markers to the map
-const complaints = {!! json_encode($complaints->map(function($c) { return ['lat' => $c->latitude, 'lng' => $c->longitude, 'id' => $c->id, 'category' => $c->category, 'priority' => $c->priority]; })) !!};
+const complaints = {!! json_encode(
+    $complaints
+        ->filter(function ($c) {
+            return strtolower($c->status) !== 'resolved';
+        })
+        ->map(function ($c) {
+            return [
+                'lat' => $c->latitude,
+                'lng' => $c->longitude,
+                'id' => $c->id,
+                'category' => $c->category,
+                'priority' => $c->priority
+            ];
+        })
+        ->values()
+) !!};
 
 complaints.forEach(complaint => {
     let color;

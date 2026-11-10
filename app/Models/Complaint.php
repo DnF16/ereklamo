@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Complaint;
 
 class Complaint extends Model
 {
@@ -23,6 +24,8 @@ class Complaint extends Model
         'latitude',
         'longitude',
         'status',
+        'image',
+        'status_updated_by',
     ];
 
     /**
@@ -43,5 +46,13 @@ class Complaint extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function statusUpdatedBy()
+    {
+        return $this->belongsTo(
+            User::class,
+            'status_updated_by'
+        );
     }
 }
