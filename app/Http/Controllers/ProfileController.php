@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -32,6 +33,12 @@ class ProfileController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'contact_number' => 'nullable|string|max:50',
             'address' => 'nullable|string',
+            'profile_picture' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048',
+            ],
             'password' => 'nullable|confirmed|min:8',
         ]);
 
@@ -39,6 +46,18 @@ class ProfileController extends Controller
         $user->email = $data['email'];
         $user->contact_number = $data['contact_number'] ?? null;
         $user->address = $data['address'] ?? null;
+        // Upload Profile Picture
+        if ($request->hasFile('profile_picture')) {
+
+            // Delete previous profile picture
+            if ($user->profile_picture) {
+                Storage::disk('public')->delete($user->profile_picture);
+            }
+
+            // Store new profile picture
+            $user->profile_picture = $request->file('profile_picture')
+                ->store('profile_pictures', 'public');
+        }
 
         if (!empty($data['password'])) {
             $user->password = $data['password'];

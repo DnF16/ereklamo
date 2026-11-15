@@ -60,7 +60,7 @@
 
         <!-- AI Priority Complaints -->
         <div class="col-md-6">
-            <div class="card app-card">
+            <div class="card app-card h-100">
                 <div class="">
                     <div class="card-header">
                         Recent High Priority Complaints
@@ -105,7 +105,7 @@
         <!-- GIS Complaint Map -->
         <div class="col-md-6 ">
 
-            <div class="card app-card">
+            <div class="card app-card h-100">
 
                 <div class="card-header">
                     <h5 class="mb-0 text-white">

@@ -75,11 +75,20 @@
 
                 <div class="card-body text-center py-4">
 
-                    <img src="https://via.placeholder.com/140"
-                         class="rounded-circle border mb-3"
-                         width="140"
-                         height="140"
-                         alt="Profile Picture">
+                    @if($user->profile_picture)
+                        <img src="{{ asset('storage/' . $user->profile_picture) }}"
+                            class="rounded-circle border mb-3"
+                            width="140"
+                            height="140"
+                            style="object-fit: cover;"
+                            alt="Profile Picture">
+                    @else
+                        <img src="https://via.placeholder.com/140"
+                            class="rounded-circle border mb-3"
+                            width="140"
+                            height="140"
+                            alt="Default Profile Picture">
+                    @endif
 
                     <h4 class="fw-bold mb-1">
                         {{ $name }}
@@ -231,7 +240,7 @@
             </div>
             <div class="modal-body">
 
-                <form method="POST" action="{{ $updateRoute }}">
+                <form method="POST" action="{{ $updateRoute }}" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
 
@@ -257,6 +266,19 @@
                                 <label class="form-label">Address</label>
                                 <textarea name="address" class="form-control">{{ old('address', $user->address) }}</textarea>
                                 @error('address')<div class="text-danger small">{{ $message }}</div>@enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Profile Picture</label>
+
+                            <input type="file"
+                                name="profile_picture"
+                                class="form-control"
+                                accept="image/jpeg,image/png,image/webp">
+
+                            @error('profile_picture')
+                                <div class="text-danger small">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <hr>

@@ -81,24 +81,54 @@
         </div>
     </div>
 
-    <!-- Barangay Announcements -->
-    <div class="card app-card mb-4">
+    <!-- My Complaints -->
+    <div class="row g-4 mt-2 mb-4">
 
-        <div class="card-header">
-            <h5 class="mb-0">Barangay Announcements</h5>
+        <!-- Total Complaints -->
+        <div class="col-md-3">
+            <div class="card app-card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">My Total Complaints</h6>
+                    <h2 class="fw-bold text-primary">{{ $stats['total'] ?? 0 }}</h2>
+                    <small class="text-muted">All submitted complaints</small>
+                </div>
+            </div>
         </div>
 
-        <div class="card-body">
+        <!-- Pending Complaints -->
+        <div class="col-md-3">
+            <div class="card app-card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Pending Complaints</h6>
+                    <h2 class="fw-bold text-warning">{{ $stats['pending'] ?? 0 }}</h2>
+                    <small class="text-muted">Waiting for review</small>
+                </div>
+            </div>
+        </div>
 
-            <ul class="mb-0">
-                <li>Barangay Cleanup Drive - July 15, 2026</li>
-                <li>Water Interruption - July 18, 2026</li>
-                <li>Barangay Office is open from 8:00 AM to 5:00 PM.</li>
-            </ul>
+        <!-- In Progress -->
+        <div class="col-md-3">
+            <div class="card app-card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">In Progress</h6>
+                    <h3 class="fw-bold text-primary">{{ $stats['in_progress'] ?? 0 }}</h3>
+                </div>
+            </div>
+        </div>
 
+        <!-- Resolved Complaints -->
+        <div class="col-md-3">
+            <div class="card app-card h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Resolved Complaints</h6>
+                    <h2 class="fw-bold text-success">{{ $stats['resolved'] ?? 0 }}</h2>
+                    <small class="text-muted">Successfully completed</small>
+                </div>
+            </div>
         </div>
 
     </div>
+
 
     <!-- How e-REKLAMO Works -->
     <div class="card app-card mb-4">

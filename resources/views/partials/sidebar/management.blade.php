@@ -11,7 +11,13 @@
     <div class="user-card mb-4">
 
         <div class="avatar">
-            {{ strtoupper(substr(auth()->user()->name,0,1)) }}
+            @if(auth()->user()->profile_picture)
+                <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}"
+                    alt="Profile Picture"
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            @else
+                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+            @endif
         </div>
 
         <div class="user-info">

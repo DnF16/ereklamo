@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('role', ['resident', 'staff', 'admin'])->default('resident');
             $table->string('contact_number')->nullable();
             $table->text('address')->nullable();
+            $table->string('profile_picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

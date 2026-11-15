@@ -6,6 +6,7 @@ use App\Http\Controllers\Management\UserController;
 use App\Http\Controllers\Management\ComplaintController as AdminComplaintController;
 use App\Http\Controllers\Management\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Resident\ComplaintController as ResidentComplaintController;
+use App\Http\Controllers\Resident\DashboardController as ResidentDashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -51,7 +52,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
 // RESIDENTS ROUTES
 Route::middleware('auth')->prefix('resident')->name('resident.')->group(function () {
-    Route::get('/dashboard', fn () => view('resident.dashboard'))->name('dashboard');
+    Route::get('/dashboard', [ResidentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/submit-complaint', [ResidentComplaintController::class, 'create'])->name('submit-complaint');
     Route::post('/submit-complaint', [ResidentComplaintController::class, 'store'])->name('submit-complaint.store');
     Route::get('/complaints', [ResidentComplaintController::class, 'index'])->name('complaints');
