@@ -67,6 +67,7 @@
                     </div>
 
                     <div class="card-body" style="height:320px; border-radius:10px;">
+                        <div class="table-responsive">
                         <table class="table table-dark table-borderless align-middle">
                             <thead>
                                 <tr>
@@ -96,6 +97,7 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        </div>
                     </div>
                     
                 </div>

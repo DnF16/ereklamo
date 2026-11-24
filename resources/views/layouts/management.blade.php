@@ -16,6 +16,22 @@
 
 <div>
 
+    <button
+        type="button"
+        class="sidebar-toggle"
+        data-sidebar-toggle
+        aria-controls="appSidebar"
+        aria-expanded="false"
+        aria-label="Open navigation menu">
+        <i class="bi bi-list" aria-hidden="true"></i>
+    </button>
+    <button
+        type="button"
+        class="sidebar-backdrop"
+        data-sidebar-backdrop
+        aria-label="Close navigation menu"
+        hidden></button>
+
     {{-- Sidebar --}}
     @include('partials.sidebar.management')
 

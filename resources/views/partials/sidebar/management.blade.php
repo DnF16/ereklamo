@@ -1,4 +1,4 @@
-<aside class="sidebar d-flex flex-column">
+<aside class="sidebar d-flex flex-column" id="appSidebar">
 
     <!-- Logo -->
     <div class="logo mb-4">
