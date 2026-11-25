@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- PWA Configuration -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ asset('icons/icon-192.png') }}">
+
     <title>e-REKLAMO</title>
 
     <!-- Bootstrap via Vite -->
@@ -14,6 +22,11 @@
 </head>
 
 <body>
+
+    <script>
+        // Allow the installation popup to appear again on a new login
+        sessionStorage.removeItem('ereklamoInstallPopupDismissed');
+    </script>
 
     <!-- ================= NAVBAR ================= -->
 
@@ -441,6 +454,53 @@
     @yield('content')
 
     @stack('scripts')
+
+        <!-- e-REKLAMO PWA Install Popup -->
+    <div
+        id="pwaInstallPopup"
+        class="pwa-install-popup"
+        data-pwa-popup
+        role="dialog"
+        aria-label="Install e-REKLAMO"
+        aria-live="polite"
+        hidden
+    >
+        <div class="pwa-install-content">
+
+            <div class="pwa-install-icon">
+                <img
+                    src="{{ asset('icons/icon-192.png') }}"
+                    alt="e-REKLAMO"
+                >
+            </div>
+
+            <div class="pwa-install-text">
+                <h6>Install e-REKLAMO</h6>
+                <p>
+                    Get quick access to e-REKLAMO directly from your device.
+                </p>
+
+                <button
+                    type="button"
+                    class="pwa-install-button"
+                    data-pwa-install
+                >
+                    <i class="bi bi-download"></i>
+                    Install App
+                </button>
+            </div>
+
+            <button
+                type="button"
+                class="pwa-install-close"
+                data-pwa-dismiss
+                aria-label="Close installation popup"
+            >
+                &times;
+            </button>
+
+        </div>
+    </div>
 
 </body>
 

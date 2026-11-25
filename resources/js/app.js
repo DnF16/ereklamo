@@ -38,3 +38,140 @@ if (sidebarToggle && sidebarBackdrop && sidebar) {
         }
     });
 }
+
+
+// Register e-REKLAMO Service Worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+                console.log(
+                    'e-REKLAMO Service Worker registered:',
+                    registration.scope
+                );
+            })
+            .catch((error) => {
+                console.error(
+                    'Service Worker registration failed:',
+                    error
+                );
+            });
+    });
+}
+
+// PWA Installation Prompt
+
+// =====================================
+// e-REKLAMO PWA INSTALLATION POPUP
+// =====================================
+
+let deferredPrompt = null;
+
+const installPopup = document.querySelector('[data-pwa-popup]');
+const installButtons = document.querySelectorAll('[data-pwa-install]');
+const dismissButtons = document.querySelectorAll('[data-pwa-dismiss]');
+
+const DISMISS_KEY = 'ereklamoInstallPopupDismissed';
+
+const popupWasDismissed = () => {
+    return sessionStorage.getItem(DISMISS_KEY) === 'true';
+};
+
+const showInstallPopup = () => {
+    if (!installPopup || popupWasDismissed()) return;
+
+    installPopup.hidden = false;
+
+    requestAnimationFrame(() => {
+        installPopup.classList.add('is-visible');
+    });
+};
+
+const hideInstallPopup = () => {
+    if (!installPopup) return;
+
+    installPopup.classList.remove('is-visible');
+
+    setTimeout(() => {
+        installPopup.hidden = true;
+    }, 250);
+};
+
+// Browser says installation is available
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+
+    deferredPrompt = event;
+
+    showInstallPopup();
+});
+
+// Install button
+installButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+
+        const promptEvent = deferredPrompt;
+        deferredPrompt = null;
+
+        await promptEvent.prompt();
+
+        const choice = await promptEvent.userChoice;
+
+        console.log('e-REKLAMO installation:', choice.outcome);
+
+        hideInstallPopup();
+    });
+});
+
+// Dismiss button
+dismissButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        sessionStorage.setItem(DISMISS_KEY, 'true');
+        hideInstallPopup();
+    });
+});
+
+// Successful installation
+window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    hideInstallPopup();
+});
+
+
+// Hide after successful installation
+window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    hideInstallPopup();
+});
+
+
+// Handle install button click
+installButtons.forEach((button) => {
+    button.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            return;
+        }
+
+        deferredPrompt.prompt();
+
+        await deferredPrompt.userChoice;
+
+        deferredPrompt = null;
+
+        // Hide the button after the prompt
+        installButtons.forEach((installButton) => {
+            installButton.hidden = true;
+        });
+    });
+});
+
+// Detect successful installation
+window.addEventListener('appinstalled', () => {
+    installButtons.forEach((button) => {
+        button.hidden = true;
+    });
+
+    deferredPrompt = null;
+});
+
